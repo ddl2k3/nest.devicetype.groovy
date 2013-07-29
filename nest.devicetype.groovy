@@ -20,9 +20,7 @@ metadata {
 
     tiles {
         valueTile("temperature", "device.temperature", width: 2, height: 2, canChangeIcon: true) {
-            //state("heat", label:'${currentValue}°', unit:"F", backgroundColor: "#bc2323")
-            //state("cool", label:'${currentValue}°', unit:"F", backgroundColor: "#153591")
-            state("off", label: '${currentValue}°', unit:"F", backgroundColors: [
+            state("temperature", label: '${currentValue}°', unit:"F", backgroundColors: [
                     [value: 31, color: "#153591"],
                     [value: 44, color: "#1e9cbb"],
                     [value: 59, color: "#90d2a7"],
@@ -62,8 +60,8 @@ metadata {
             state "default", label:'${currentValue}%', unit:"Humidity"
         }
         standardTile("away", "device.away", inactiveLabel: false, decoration: "flat") {
-            state "present", label:'${name}', action:"thermostat.away", icon: "st.Appliances.appliances11"
-            state "away", label:'${name}', action:"thermostat.present", icon: "st.Appliances.appliances11"
+            state "present", label:'${name}', action:"custom.away", icon: "st.Home.home2"
+            state "away", label:'${name}', action:"custom.present", icon: "st.Transportation.transportation5"
         }
         standardTile("refresh", "device.thermostatMode", inactiveLabel: false, decoration: "flat") {
             state "default", action:"polling.poll", icon:"st.secondary.refresh"
