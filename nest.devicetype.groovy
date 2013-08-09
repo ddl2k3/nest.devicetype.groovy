@@ -20,12 +20,11 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
- 
 
-def setup() {
-    data.username = ''
-    data.password = ''
-    data.serial = ''    
+preferences {
+    input("username", "text", title: "Username", description: "Your Nest username (usually an email address)")
+    input("password", "password", title: "Password", description: "Your Nest password")
+    input("serial", "text", title: "Serial #", description: "The serial number of your thermostat")
 }
  
  // for the UI
@@ -177,9 +176,9 @@ def auto() {
 def poll() {
     log.debug "Executing 'poll'"
     api('status', []) {
-        data.device = it.data.device.getAt(data.serial)
-        data.shared = it.data.shared.getAt(data.serial)
-        data.structureId = it.data.link.getAt(data.serial).structure.tokenize('.')[1]
+        data.device = it.data.device.getAt(settings.serial)
+        data.shared = it.data.shared.getAt(settings.serial)
+        data.structureId = it.data.link.getAt(settings.serial).structure.tokenize('.')[1]
         data.structure = it.data.structure.getAt(data.structureId)
                 
         data.device.fan_mode = data.device.fan_mode == 'duty-cycle'? 'circulate' : data.device.fan_mode
@@ -204,9 +203,9 @@ def api(method, args = [], success = {}) {
 
     def methods = [
         'status': [uri: "/v2/mobile/${data.auth.user}", type: 'get'],
-        'fan_mode': [uri: "/v2/put/device.${data.serial}", type: 'post'],
-        'thermostat_mode': [uri: "/v2/put/shared.${data.serial}", type: 'post'],
-        'temperature': [uri: "/v2/put/shared.${data.serial}", type: 'post'],
+        'fan_mode': [uri: "/v2/put/device.${settings.serial}", type: 'post'],
+        'thermostat_mode': [uri: "/v2/put/shared.${settings.serial}", type: 'post'],
+        'temperature': [uri: "/v2/put/shared.${settings.serial}", type: 'post'],
         'away': [uri: "/v2/put/structure.${data.structureId}", type: 'post'],
         'weather': [uri: "https://home.nest.com/api/0.1/weather/forecast/52317", type: 'get']
     ]
@@ -243,11 +242,9 @@ def doRequest(uri, args, type, success) {
 }
 
 def login(method = null, args = [], success = {}) {
-    setup()
-    
     def params = [
         uri: 'https://home.nest.com/user/login',
-        body: [username: data.username, password: data.password]
+        body: [username: settings.username, password: settings.password]
     ]        
     
     httpPost(params) {response -> 
