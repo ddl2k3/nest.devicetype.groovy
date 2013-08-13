@@ -3,6 +3,7 @@
  *
  *  Author: dianoga7@3dgo.net
  *  Date: 2013-07-18
+ *  Code: https://gist.github.com/Dianoga/6055918
  *
  * Capabilities:
  *   Polling
