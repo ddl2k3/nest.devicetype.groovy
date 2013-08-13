@@ -22,7 +22,7 @@
  */
 
 preferences {
-    input("username", "text", title: "Username", description: "Your Nest username (usually an email address)")
+	input("username", "text", title: "Username", description: "Your Nest username (usually an email address)")
     input("password", "password", title: "Password", description: "Your Nest password")
     input("serial", "text", title: "Serial #", description: "The serial number of your thermostat")
 }
@@ -74,7 +74,7 @@ metadata {
         valueTile("humidity", "device.humidity", inactiveLabel: false, decoration: "flat") {
             state "default", label:'${currentValue}%', unit:"Humidity"
         }
-        standardTile("away", "device.away", inactiveLabel: false, decoration: "flat") {
+        standardTile("presence", "device.presence", inactiveLabel: false, decoration: "flat") {
             state "present", label:'${name}', action:"custom.away", icon: "st.Home.home2"
             state "away", label:'${name}', action:"custom.present", icon: "st.Transportation.transportation5"
         }
@@ -82,7 +82,7 @@ metadata {
             state "default", action:"polling.poll", icon:"st.secondary.refresh"
         }
         main "temperature"
-        details(["temperature", "thermostatMode", "thermostatFanMode", "coolSliderControl", "coolingSetpoint", "humidity", "away", "refresh"])
+        details(["temperature", "thermostatMode", "thermostatFanMode", "coolSliderControl", "coolingSetpoint", "humidity", "presence", "refresh"])
     }
 }
 
@@ -156,16 +156,16 @@ def setThermostatFanMode(mode) {
 }
 
 def away() {
-    setAway('away')
+    setPresence('away')
 }
 
 def present() {
-    setAway('present')
+    setPresence('present')
 }
 
-def setAway(status) {
-    api('away', ['away': status == 'away', 'away_timestamp': new Date().getTime(), 'away_setter': 0]) {
-        sendEvent(name: 'away', value: status)
+def setPresence(status) {
+    api('presence', ['away': status == 'away', 'away_timestamp': new Date().getTime(), 'away_setter': 0]) {
+        sendEvent(name: 'presence', value: status)
     }
 }
 
@@ -190,7 +190,7 @@ def poll() {
         sendEvent(name: 'thermostatMode', value: data.shared.target_temperature_type)
         sendEvent(name: 'coolingSetpoint', value: cToF(data.shared.target_temperature) as Integer)
         sendEvent(name: 'heatingSetpoint', value: cToF(data.shared.target_temperature) as Integer)
-        sendEvent(name: 'away', value: data.structure.away)
+        sendEvent(name: 'presence', value: data.structure.away)
     }
 }
 
@@ -206,7 +206,7 @@ def api(method, args = [], success = {}) {
         'fan_mode': [uri: "/v2/put/device.${settings.serial}", type: 'post'],
         'thermostat_mode': [uri: "/v2/put/shared.${settings.serial}", type: 'post'],
         'temperature': [uri: "/v2/put/shared.${settings.serial}", type: 'post'],
-        'away': [uri: "/v2/put/structure.${data.structureId}", type: 'post'],
+        'presence': [uri: "/v2/put/structure.${data.structureId}", type: 'post'],
         'weather': [uri: "https://home.nest.com/api/0.1/weather/forecast/52317", type: 'get']
     ]
     
@@ -241,7 +241,7 @@ def doRequest(uri, args, type, success) {
     }
 }
 
-def login(method = null, args = [], success = {}) {
+def login(method = null, args = [], success = {}) {    
     def params = [
         uri: 'https://home.nest.com/user/login',
         body: [username: settings.username, password: settings.password]
