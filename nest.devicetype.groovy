@@ -3,6 +3,19 @@
  *
  *  Author: dianoga7@3dgo.net
  *  Date: 2013-07-18
+ *
+ * Capabilities:
+ *   Polling
+ *   Relative Humidity Measurement
+ *   Thermostat
+ *
+ * Custom Attributes:
+ *   presence
+ *
+ * Custom Commands:
+ *   away
+ *   present
+ *   setPresence
  * 
  * Copyright (C) 2013 Brian Steere <dianoga7@3dgo.net>
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this 
