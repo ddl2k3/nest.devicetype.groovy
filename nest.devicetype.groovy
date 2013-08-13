@@ -22,7 +22,7 @@
  */
 
 preferences {
-	input("username", "text", title: "Username", description: "Your Nest username (usually an email address)")
+    input("username", "text", title: "Username", description: "Your Nest username (usually an email address)")
     input("password", "password", title: "Password", description: "Your Nest password")
     input("serial", "text", title: "Serial #", description: "The serial number of your thermostat")
 }
