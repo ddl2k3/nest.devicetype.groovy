@@ -75,8 +75,8 @@ metadata {
             state "default", label:'${currentValue}%', unit:"Humidity"
         }
         standardTile("presence", "device.presence", inactiveLabel: false, decoration: "flat") {
-            state "present", label:'${name}', action:"custom.away", icon: "st.Home.home2"
-            state "away", label:'${name}', action:"custom.present", icon: "st.Transportation.transportation5"
+            state "present", label:'${name}', action:"away", icon: "st.Home.home2"
+            state "away", label:'${name}', action:"present", icon: "st.Transportation.transportation5"
         }
         standardTile("refresh", "device.thermostatMode", inactiveLabel: false, decoration: "flat") {
             state "default", action:"polling.poll", icon:"st.secondary.refresh"
@@ -164,6 +164,7 @@ def present() {
 }
 
 def setPresence(status) {
+	log.debug "Status: $status"
     api('presence', ['away': status == 'away', 'away_timestamp': new Date().getTime(), 'away_setter': 0]) {
         sendEvent(name: 'presence', value: status)
     }
