@@ -81,9 +81,9 @@ metadata {
             )
         }
         standardTile("thermostatMode", "device.thermostatMode", inactiveLabel: false, decoration: "flat") {
-            state "heat", label:'${name}', action:"thermostat.off", icon: "st.Weather.weather14"
+            state "heat", label:'${name}', action:"thermostat.off", icon: "st.Weather.weather14", backgroundColor: '#E14902'
             state "off", label:'${name}', action:"thermostat.cool", icon: "st.Outdoor.outdoor19"
-            state "cool", label:'${name}', action:"thermostat.heat", icon: "st.Weather.weather7"
+            state "cool", label:'${name}', action:"thermostat.heat", icon: "st.Weather.weather7", backgroundColor: '#003CEC'
         }
         standardTile("thermostatFanMode", "device.thermostatFanMode", inactiveLabel: false, decoration: "flat") {
             state "auto", label:'${name}', action:"thermostat.fanOn", icon: "st.Appliances.appliances11"
