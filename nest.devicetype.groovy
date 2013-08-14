@@ -5,19 +5,39 @@
  *  Date: 2013-07-18
  *  Code: https://gist.github.com/Dianoga/6055918
  *
- * Capabilities:
- *   Polling
- *   Relative Humidity Measurement
- *   Thermostat
+ * INSTALLATION
+ * =========================================
+ * 1) Create a new device type (https://graph.api.smartthings.com/ide/devices)
+ *     Name: Nest
+ *     Author: dianoga7@3dgo.net
+ *     Capabilities:
+ *         Polling
+ *         Relative Humidity Measurement
+ *         Thermostat
+ *     Custom Attributes:
+ *         presence
+ *     Custom Commands:
+ *         away
+ *         present
+ *         setPresence
  *
- * Custom Attributes:
- *   presence
+ * 2) Create a new device (https://graph.api.smartthings.com/device/list)
+ *     Name: Your Choice
+ *     Device Network Id: Your Choice
+ *     Type: Nest (should be the last option)
+ *     Location: Choose the correct location
+ *     Hub/Group: Leave blank
  *
- * Custom Commands:
- *   away
- *   present
- *   setPresence
- * 
+ * 3) Update device preferences
+ *     Click on the new device to see the details.
+ *     Click the edit button next to Preferences
+ *     Fill in your information.
+ *     To find your serial number, login to http://home.nest.com. Click on the thermostat 
+ *     you want to control. Under settings, go to Technical Info. Your serial number is 
+ *     the second item.
+ *
+ * 4) That's it, you're done.
+ *     
  * Copyright (C) 2013 Brian Steere <dianoga7@3dgo.net>
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this 
  * software and associated documentation files (the "Software"), to deal in the Software 
